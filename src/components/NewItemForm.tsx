@@ -1,7 +1,7 @@
 "use client";
 
 import useFocus from "@/hooks/useFocus";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 
 interface NewItemFormProps {
   onAdd: (text: string) => void;

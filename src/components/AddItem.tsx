@@ -3,30 +3,31 @@
 import { useState } from "react";
 import NewItemForm from "./NewItemForm";
 
-interface AddNewItemProps {
-  toggleButtonText: string;
+interface AddItemButtonProps {
+  buttonText: string;
+  onAdd: (text:string) => void;
 }
-const AddNewItem = ({ toggleButtonText }: AddNewItemProps) => {
-  const [isAddMode, setIsAddMode] = useState(false);
+const AddItemButton = ({ buttonText, onAdd }: AddItemButtonProps) => {
+  const [showForm, setShowForm] = useState(false);
 
-  if (isAddMode) {
+  if (showForm) {
     return (
       <NewItemForm
         onAdd={(text) => {
-          console.log(text);
-          setIsAddMode(false);
+          onAdd(text)
+          setShowForm(false);
         }}
       />
     );
   }
   return (
     <button
-      onClick={() => setIsAddMode(true)}
+      onClick={() => setShowForm(true)}
       className='bg-[#ffffff3d] hover:bg-[#ffffff8c] border-none rounded-sm cursor-pointer max-w-[300px] py-2.5 px-3 w-full text-left transition-colors duration-100'
     >
-      {toggleButtonText}
+      {buttonText}
     </button>
   );
 };
 
-export default AddNewItem;
+export default AddItemButton;
