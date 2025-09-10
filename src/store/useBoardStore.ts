@@ -10,9 +10,9 @@ interface Column {
 
 interface BoardState {
   columns: Column[];
-  addTaskColumn: (title: string) => void;
-  addTaskCard: (columnId: string, text: string) => void;
-  moveTaskColumn: (draggedId: string, hoverId: string) => void;
+  addBoardColumn: (title: string) => void;
+  addTaskCard: (columnId: string, title: string) => void;
+  moveBoardColumn: (draggedId: string, hoverId: string) => void;
 }
 
 export const useBoardStore = create<BoardState>((set) => ({
@@ -21,52 +21,53 @@ export const useBoardStore = create<BoardState>((set) => ({
       id: "c0",
       title: "To do",
       tasks: [
-        { id: "c0t0", text: "Generate App Scaffold" },
-        { id: "c0t1", text: "Learn Typescript" },
+        { id: "c0t0", title: "Generate App Scaffold" },
+        { id: "c0t1", title: "Learn Typescript" },
       ],
     },
     {
       id: "c1",
       title: "In Progress",
       tasks: [
-        { id: "c1t0", text: "Generate App Scaffold" },
-        { id: "c1t1", text: "Learn Typescript" },
+        { id: "c1t0", title: "Generate App Scaffold" },
+        { id: "c1t1", title: "Learn Typescript" },
       ],
     },
     {
       id: "c2",
       title: "Done",
       tasks: [
-        { id: "c2t0", text: "Generate App Scaffold" },
-        { id: "c2t1", text: "Learn Typescript" },
+        { id: "c2t0", title: "Generate App Scaffold" },
+        { id: "c2t1", title: "Learn Typescript" },
       ],
     },
   ],
-  addTaskColumn: (title: string) =>
+  addBoardColumn: (title: string) =>
     set((state) => ({
       columns: [...state.columns, { id: generateUniqueId(), title, tasks: [] }],
     })),
-  addTaskCard: (columnId, text) =>
+  addTaskCard: (columnId, title) =>
     set((state) => ({
       columns: state.columns.map((column) =>
         column.id === columnId
           ? {
               ...column,
-              tasks: [...column.tasks, { id: generateUniqueId(), text }],
+              tasks: [...column.tasks, { id: generateUniqueId(), title }],
             }
           : column
       ),
     })),
-  moveTaskColumn: (draggedId, hoveredId) => set((state) => {
-    const columns = state.columns;
-    const draggedIndex = findItemIndexById(columns, draggedId)
-    const hoveredIndex = findItemIndexById(columns, hoveredId)
+  moveBoardColumn: (draggedId, hoveredId) =>
+    set((state) => {
+      const columns = state.columns;
+      const draggedIndex = findItemIndexById(columns, draggedId);
+      const hoveredIndex = findItemIndexById(columns, hoveredId);
 
-    if (draggedIndex === -1 || hoveredIndex === -1) {
-      return state;
-    }
-    return {
-      columns: moveItem(columns, draggedIndex, hoveredIndex)
-    }
-  }),
+      if (draggedIndex === -1 || hoveredIndex === -1) {
+        return state;
+      }
+      return {
+        columns: moveItem(columns, draggedIndex, hoveredIndex),
+      };
+    }),
 }));

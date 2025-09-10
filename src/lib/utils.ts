@@ -1,4 +1,4 @@
-import { Item, Task } from "@/types";
+import { Item } from "@/types";
 
 export const generateUniqueId = () => `list_${Date.now()}`;
 

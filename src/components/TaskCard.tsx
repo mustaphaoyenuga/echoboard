@@ -1,11 +1,11 @@
 interface TaskCardProps {
   id: string;
-  text: string;
+  title: string;
 }
-const TaskCard = ({ id, text }: TaskCardProps) => {
+const TaskCard = ({ id, title }: TaskCardProps) => {
   return (
     <div className='bg-white py-2 px-4 rounded-sm max-w-[300px] shadow-md mb-3'>
-      {text}
+      {title}
     </div>
   );
 };
