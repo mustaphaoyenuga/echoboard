@@ -1,12 +1,24 @@
+import { Draggable } from "@hello-pangea/dnd";
+
 interface TaskCardProps {
-  id: string;
-  title: string;
+  task: { id: string; title: string };
+  index: number;
 }
-const TaskCard = ({ id, title }: TaskCardProps) => {
+const TaskCard = ({ task, index }: TaskCardProps) => {
   return (
-    <div className='bg-white py-2 px-4 rounded-sm max-w-[300px] shadow-md mb-3'>
-      {title}
-    </div>
+    <Draggable draggableId={task.id} index={index}>
+      {(provided, snapshot) => (
+        <li
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          className={`py-2 px-4 rounded-sm max-w-[300px] shadow-md mb-2 ${snapshot.isDragging ? 'rotate-2 shadow-xl bg-teal-50':'bg-white'}`}
+          style={{ ...provided.draggableProps.style }}
+        >
+          {task.title}
+        </li>
+      )}
+    </Draggable>
   );
 };
 

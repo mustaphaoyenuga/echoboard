@@ -23,7 +23,7 @@ const AddItemButton = ({ buttonText, onAdd }: AddItemButtonProps) => {
   return (
     <button
       onClick={() => setShowForm(true)}
-      className='bg-[#ffffff3d] hover:bg-[#ffffff8c] border-none rounded-sm cursor-pointer max-w-[300px] py-2.5 px-3 w-full text-left transition-colors duration-100'
+      className='bg-[#ffffff3d] hover:bg-[#ffffff8c] border-none rounded-sm cursor-pointer max-w-[300px] py-2.5 px-3 w-full text-left transition-colors duration-100 shrink-0'
     >
       {buttonText}
     </button>
