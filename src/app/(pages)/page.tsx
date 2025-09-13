@@ -1,9 +1,9 @@
-import ColumnList from "@/components/board/ColumnList";
+import BoardPage from "./(dashboard)/board/page";
 
 export default function Home() {
   return (
-    <div className='bg-teal-900 min-h-screen overflow-x-auto p-5'>
-      <ColumnList />
+    <div>
+      <BoardPage />
     </div>
   );
 }

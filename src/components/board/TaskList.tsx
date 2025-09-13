@@ -24,7 +24,7 @@ const TaskList = ({ columnId }: { columnId: string }) => {
         >
           {tasks.length === 0 && !snapshot.isDraggingOver && (
             <div className='text-gray-400 text-sm text-center py-1 rounded-md'>
-              Drop cards here
+              Drag and drop cards here
             </div>
           )}
           {tasks.map((task, index) => (

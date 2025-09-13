@@ -1,4 +1,4 @@
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, TriangleAlert } from "lucide-react";
 import { Button } from "../ui/button";
 import { CardAction, CardHeader, CardTitle } from "../ui/card";
 
@@ -13,6 +13,7 @@ import {
 import { useBoardStore } from "@/store/useBoardStore";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -48,7 +49,7 @@ const ColumnHeader = ({ column, dragHandleProps }: ColumnHeaderProps) => {
               <DropdownMenuSeparator />
               <DropdownMenuItem>Edit</DropdownMenuItem>
               <DropdownMenuItem>Duplicate</DropdownMenuItem>
-              <DialogTrigger>
+              <DialogTrigger asChild>
                 <DropdownMenuItem variant='destructive'>
                   Delete
                 </DropdownMenuItem>
@@ -58,18 +59,25 @@ const ColumnHeader = ({ column, dragHandleProps }: ColumnHeaderProps) => {
 
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Are you sure ?</DialogTitle>
+              <DialogTitle className="flex items-center gap-x-2"><TriangleAlert className="text-red-500 w-6 h-6" />Delete Card</DialogTitle>
               <DialogDescription>
-                This action cannot be undone. Are you sure you want to
-                permanently delete this Card from your board?
+                Are you sure you want to permanently delete the{" "}
+                <span className="font-bold text-black">{column.title}</span> Card from your board?
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
-              <Button type='submit' variant='destructive' onClick={()=> deleteBoardColumn(column.id)}>
-                Delete
-              </Button>
-              <Button type='submit' variant='outline' onClick={() => {}}>
+             <DialogClose asChild>
+               <Button type='button' variant='secondary' className="cursor-pointer">
                 Cancel
+              </Button>
+             </DialogClose>
+               <Button
+                type='button'
+                variant='destructive'
+                className="cursor-pointer"
+                onClick={() => deleteBoardColumn(column.id)}
+              >
+                Delete
               </Button>
             </DialogFooter>
           </DialogContent>
