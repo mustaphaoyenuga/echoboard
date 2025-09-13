@@ -1,6 +1,7 @@
 import { findItemIndexById, generateUniqueId, moveItem } from "@/lib/utils";
 import { Task } from "@/types";
 import { create } from "zustand";
+import { initialColumns } from "./initialBoardData";
 
 interface Column {
   id: string;
@@ -11,8 +12,9 @@ interface Column {
 interface BoardState {
   columns: Column[];
   addBoardColumn: (title: string) => void;
-  addTaskCard: (columnId: string, title: string) => void;
   moveBoardColumn: (sourceIndex: number, destinationIndex: number) => void;
+  deleteBoardColumn: (columnId: string) => void;
+  addTaskCard: (columnId: string, title: string) => void;
   moveTaskCard: (
     sourceColumnId: string,
     destinationColumnId: string,
@@ -23,37 +25,20 @@ interface BoardState {
 }
 
 export const useBoardStore = create<BoardState>((set, get) => ({
-  columns: [
-    {
-      id: "c0",
-      title: "To do",
-      tasks: [
-        { id: "c0t0", title: "Generate App Scaffold" },
-        { id: "c0t1", title: "Learn Typescript" },
-      ],
-    },
-    {
-      id: "c1",
-      title: "In Progress",
-      tasks: [
-        { id: "c1t0", title: "Fly to Paris" },
-        { id: "c1t1", title: "Eat Biscuit" },
-      ],
-    },
-    {
-      id: "c2",
-      title: "Done",
-      tasks: [
-        { id: "c2t0", title: "Learn Spanish" },
-        { id: "c2t1", title: "Fly to Paris" },
-      ],
-    },
-  ],
+  columns: initialColumns,
   getTasksByListId: (id: string) =>
     get().columns.find((column) => column.id === id)?.tasks || [],
   addBoardColumn: (title: string) =>
     set((state) => ({
       columns: [...state.columns, { id: generateUniqueId(), title, tasks: [] }],
+    })),
+  moveBoardColumn: (sourceIndex, destinationIndex) =>
+    set((state) => ({
+      columns: moveItem(state.columns, sourceIndex, destinationIndex),
+    })),
+  deleteBoardColumn: (columnId) =>
+    set((state) => ({
+      columns: state.columns.filter((column) => column.id !== columnId),
     })),
   addTaskCard: (columnId, title) =>
     set((state) => ({
@@ -65,10 +50,6 @@ export const useBoardStore = create<BoardState>((set, get) => ({
             }
           : column
       ),
-    })),
-  moveBoardColumn: (sourceIndex, destinationIndex) =>
-    set((state) => ({
-      columns: moveItem(state.columns, sourceIndex, destinationIndex),
     })),
   moveTaskCard: (
     sourceColumnId,

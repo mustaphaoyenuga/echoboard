@@ -8,7 +8,7 @@ const TaskCard = ({ task, index }: TaskCardProps) => {
   return (
     <Draggable draggableId={task.id} index={index}>
       {(provided, snapshot) => (
-        <li
+        <div
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -16,7 +16,7 @@ const TaskCard = ({ task, index }: TaskCardProps) => {
           style={{ ...provided.draggableProps.style }}
         >
           {task.title}
-        </li>
+        </div>
       )}
     </Draggable>
   );

@@ -1,14 +1,10 @@
 "use client";
 
+import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
+
 import { useBoardStore } from "@/store/useBoardStore";
-import BoardColumn from "./BoardColumn";
-import AddItemButton from "./AddItem";
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  DropResult,
-} from "@hello-pangea/dnd";
+import AddItemButton from "./AddItemButton";
+import ColumnCard from "./ColumnCard";
 
 const ColumnList = () => {
   const columns = useBoardStore((state) => state.columns);
@@ -49,30 +45,13 @@ const ColumnList = () => {
             className='flex items-start gap-x-5'
           >
             {columns.map((column, index) => (
-              <Draggable key={column.id} draggableId={column.id} index={index}>
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    className={`${
-                      snapshot.isDragging && "rotate-[4deg] opacity-90"
-                    }`}
-                    style={{ ...provided.draggableProps.style }}
-                  >
-                    <BoardColumn
-                      id={column.id}
-                      title={column.title}
-                      dragHandleProps={provided.dragHandleProps}
-                    />
-                  </div>
-                )}
-              </Draggable>
+              <ColumnCard key={column.id} column={column} index={index} />
             ))}
 
             {provided.placeholder}
 
             <AddItemButton
-              buttonText=' + Add another list'
+              buttonText='Add another list'
               onAdd={(text) => addBoardColumn(text)}
             />
           </div>
