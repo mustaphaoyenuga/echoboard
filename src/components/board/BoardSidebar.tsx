@@ -59,10 +59,10 @@ const sidebarGroups = [
 const BoardSidebar = () => {
   return (
     <Sidebar>
-      <SidebarHeader className='bg-gray-200'>
+      <SidebarHeader className='bg-white'>
         <Logo />
       </SidebarHeader>
-      <SidebarContent className='bg-gray-200'>
+      <SidebarContent className='bg-white'>
         {sidebarGroups.map((group) => (
           <SidebarGroup key={group.label}>
             <SidebarGroupLabel>{group.label}</SidebarGroupLabel>

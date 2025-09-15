@@ -8,8 +8,8 @@ import ColumnCard from "./ColumnCard";
 
 const ColumnList = () => {
   const columns = useBoardStore((state) => state.columns);
-  const addBoardColumn = useBoardStore((state) => state.addBoardColumn);
-  const moveBoardColumn = useBoardStore((state) => state.moveBoardColumn);
+  const addColumnCard = useBoardStore((state) => state.addColumnCard);
+  const moveColumnCard = useBoardStore((state) => state.moveColumnCard);
   const moveTaskCard = useBoardStore((state) => state.moveTaskCard);
 
   const handleDragEnd = (result: DropResult) => {
@@ -23,7 +23,7 @@ const ColumnList = () => {
       return;
     }
     if (type === "COLUMN") {
-      moveBoardColumn(source.index, destination.index);
+      moveColumnCard(source.index, destination.index);
     }
     if (type === "CARD") {
       moveTaskCard(
@@ -52,7 +52,7 @@ const ColumnList = () => {
 
             <AddItemButton
               buttonText='Add another list'
-              onAdd={(text) => addBoardColumn(text)}
+              onAdd={(text) => addColumnCard(text)}
             />
           </div>
         )}

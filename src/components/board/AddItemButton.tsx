@@ -16,13 +16,14 @@ const AddItemButton = ({ buttonText, onAdd }: AddItemButtonProps) => {
     return (
       <NewItemForm
         onAdd={(text) => {
-          if (text) {
+          if (text.trim()) {
             onAdd(text);
             setShowForm(false);
           } else {
             setShowForm(false);
           }
         }}
+        onCancel={() => setShowForm(false)}
       />
     );
   }

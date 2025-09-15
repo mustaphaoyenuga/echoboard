@@ -20,7 +20,7 @@ const removeItemAtIndex = <TItem>(array: TItem[], index: number) => {
   // remove all items before the index then all items after the index
   return [...array.slice(0, index), ...array.slice(index + 1)];
 };
-const insertItemAtIndex = <TItem>(
+export const insertItemAtIndex = <TItem>(
   array: TItem[],
   item: TItem,
   index: number

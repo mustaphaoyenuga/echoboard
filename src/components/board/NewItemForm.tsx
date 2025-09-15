@@ -2,18 +2,23 @@
 
 import useFocus from "@/hooks/useFocus";
 import { useState } from "react";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { X } from "lucide-react";
 
 interface NewItemFormProps {
   onAdd: (text: string) => void;
+  onCancel: () => void;
 }
 
-const NewItemForm = ({ onAdd }: NewItemFormProps) => {
+const NewItemForm = ({ onAdd, onCancel }: NewItemFormProps) => {
   const [text, setText] = useState("");
   const inputRef = useFocus();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onAdd(text);
+    setText("");
   };
 
   return (
@@ -24,20 +29,20 @@ const NewItemForm = ({ onAdd }: NewItemFormProps) => {
       <label htmlFor='task' className='sr-only'>
         Task
       </label>
-      <input
+      <Input
         id='task'
         type='text'
         value={text}
-        ref={inputRef}
+        autoFocus
         onChange={(e) => setText(e.target.value)}
-        className='w-full rounded-sm shadow-sm border border-gray-300 mb-2 py-2 px-4'
+        className='border border-brand-500'
       />
-      <button
-        type='submit'
-        className='text-white bg-cyan-500 rounded-sm cursor-pointer border-none py-1.5 px-3 text-center'
-      >
-        Create
-      </button>
+      <div className='flex items-center gap-x-2 mt-4'>
+        <Button type="submit" size="sm">Create</Button>
+        <Button variant="ghost" size="icon" onClick={onCancel}>
+          <X />
+        </Button>
+      </div>
     </form>
   );
 };

@@ -1,4 +1,4 @@
-import { findItemIndexById, generateUniqueId, moveItem } from "@/lib/utils";
+import { findItemIndexById, generateUniqueId, insertItemAtIndex, moveItem } from "@/lib/utils";
 import { Task } from "@/types";
 import { create } from "zustand";
 import { initialColumns } from "./initialBoardData";
@@ -11,9 +11,11 @@ interface Column {
 
 interface BoardState {
   columns: Column[];
-  addBoardColumn: (title: string) => void;
-  moveBoardColumn: (sourceIndex: number, destinationIndex: number) => void;
-  deleteBoardColumn: (columnId: string) => void;
+  addColumnCard: (title: string) => void;
+  moveColumnCard: (sourceIndex: number, destinationIndex: number) => void;
+  deleteColumnCard: (columnId: string) => void;
+  duplicateColumnCard: (columnId: string) => void;
+  editColumnCardTitle: (columnId: string, newTitle: string) => void;
   addTaskCard: (columnId: string, title: string) => void;
   moveTaskCard: (
     sourceColumnId: string,
@@ -28,17 +30,41 @@ export const useBoardStore = create<BoardState>((set, get) => ({
   columns: initialColumns,
   getTasksByListId: (id: string) =>
     get().columns.find((column) => column.id === id)?.tasks || [],
-  addBoardColumn: (title: string) =>
+  addColumnCard: (title: string) =>
     set((state) => ({
       columns: [...state.columns, { id: generateUniqueId(), title, tasks: [] }],
     })),
-  moveBoardColumn: (sourceIndex, destinationIndex) =>
+  moveColumnCard: (sourceIndex, destinationIndex) =>
     set((state) => ({
       columns: moveItem(state.columns, sourceIndex, destinationIndex),
     })),
-  deleteBoardColumn: (columnId) =>
+  deleteColumnCard: (columnId) =>
     set((state) => ({
       columns: state.columns.filter((column) => column.id !== columnId),
+    })),
+  duplicateColumnCard: (columnId) =>
+    set((state) => {
+      const indexOfcolumnToDuplicate = state.columns.findIndex(
+        (column) => column.id === columnId
+      );
+      if (indexOfcolumnToDuplicate === -1) return state;
+
+      const columnToDuplicate = state.columns[indexOfcolumnToDuplicate];
+      const duplicatedColumn = {
+        ...columnToDuplicate,
+        id: generateUniqueId(),
+        title: `${columnToDuplicate.title} - copy`,
+        tasks: columnToDuplicate.tasks.map((task) => ({
+          ...task,
+          id: generateUniqueId(), 
+        })),
+      };
+      return {
+        columns: insertItemAtIndex(state.columns, duplicatedColumn, indexOfcolumnToDuplicate + 1),
+      };
+    }),
+    editColumnCardTitle: (columnId, newTitle) => set((state) => ({
+      columns: state.columns.map(column => column.id === columnId ? {...column, title: newTitle}: column)
     })),
   addTaskCard: (columnId, title) =>
     set((state) => ({
