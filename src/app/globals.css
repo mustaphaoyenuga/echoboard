@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+html, body {
+  height: 100%;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -119,4 +123,41 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@theme {
+  /* Brand colors */
+  --color-brand-50:  #f5f3ff;
+  --color-brand-100: #ede9fe;
+  --color-brand-200: #ddd6fe;
+  --color-brand-300: #c4b5fd;
+  --color-brand-400: #a78bfa;
+  --color-brand-500: #4F4789;   /* primary brand */
+  --color-brand-600: #433c7a;
+  --color-brand-700: #37306a;
+  --color-brand-800: #2b2555;
+  --color-brand-900: #160c26;   /* dark brand */
+
+  /* Neutral / surface */
+  --color-surface:   #160c26;
+  --color-bg-dark:   #160c26;   /* deeper than #160c26 for app shells */
+  --color-bg-light:  #FFFDED;
+
+  /* Accent highlight */
+  --color-accent-500: #eab308;  /* amber for calls to action */
+  --color-accent-600: #d97706;
+}
+
+/* Dark mode overrides */
+.dark {
+  --color-background: var(--color-bg-dark);
+  --color-text:       #FFFDED;
+  --color-surface:    #1e1635;
+}
+
+/* Light mode overrides */
+.light {
+  --color-background: var(--color-bg-light);
+  --color-text:       #160c26;
+  --color-surface:    #f9f8f2;
 }

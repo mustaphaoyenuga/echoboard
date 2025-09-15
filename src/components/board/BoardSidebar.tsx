@@ -11,6 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "../ui/sidebar";
+import Logo from "../Logo";
 
 const sidebarGroups = [
   {
@@ -58,13 +59,10 @@ const sidebarGroups = [
 const BoardSidebar = () => {
   return (
     <Sidebar>
-      <SidebarHeader className="bg-gray-200">
-        <div className='text-2xl text-teal-700 font-extrabold uppercase flex items-center'>
-          Echo <Columns2 size={30} />
-          Board
-        </div>
+      <SidebarHeader className='bg-gray-200'>
+        <Logo />
       </SidebarHeader>
-      <SidebarContent className="bg-gray-200">
+      <SidebarContent className='bg-gray-200'>
         {sidebarGroups.map((group) => (
           <SidebarGroup key={group.label}>
             <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
