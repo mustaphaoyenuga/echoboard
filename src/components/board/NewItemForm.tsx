@@ -1,6 +1,5 @@
 "use client";
 
-import useFocus from "@/hooks/useFocus";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -13,7 +12,6 @@ interface NewItemFormProps {
 
 const NewItemForm = ({ onAdd, onCancel }: NewItemFormProps) => {
   const [text, setText] = useState("");
-  const inputRef = useFocus();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,8 +36,10 @@ const NewItemForm = ({ onAdd, onCancel }: NewItemFormProps) => {
         className='border border-brand-500'
       />
       <div className='flex items-center gap-x-2 mt-4'>
-        <Button type="submit" size="sm">Create</Button>
-        <Button variant="ghost" size="icon" onClick={onCancel}>
+        <Button type='submit' variant='primary' size='sm'>
+          Create
+        </Button>
+        <Button variant='ghost' size='icon' onClick={onCancel}>
           <X />
         </Button>
       </div>
