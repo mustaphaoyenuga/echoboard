@@ -1,6 +1,7 @@
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import MobileNav from "./MobileNav";
+import Link from "next/link";
 
 const navLinks = [
   { name: "Product", href: "#" },
@@ -34,9 +35,9 @@ const Navbar = () => {
 
         <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
           <Button variant='ghost' asChild>
-            <a href='#' className='text-sm/6 font-semibold text-gray-900 dark:text-gray-100'>
+            <Link href='/login' className='text-sm/6 font-semibold text-gray-900 dark:text-gray-100'>
               Log in <span aria-hidden='true'>&rarr;</span>
-            </a>
+            </Link>
           </Button>
         </div>
 
