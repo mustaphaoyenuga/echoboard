@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import { siteConfig } from "../../config/site";
+import { siteConfig } from "../config/site";
 
 const roboto = Roboto({ subsets: ["latin"] });
 
