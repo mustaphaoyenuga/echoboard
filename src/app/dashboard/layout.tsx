@@ -1,7 +1,16 @@
+import { redirect } from "next/navigation";
+import { createClient } from "@/utils/supabase/server";
+
 import Navbar from "./_components/Navbar";
 import Sidebar from "./_components/Sidebar";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+   const supabase = await createClient();
+
+  const { data, error } = await supabase.auth.getUser();
+  if (error || !data?.user) {
+    redirect("/login");
+  }
   return (
     <div className='h-screen'>
       <Sidebar />
@@ -16,4 +25,4 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default DashboardLayout;
+

@@ -42,17 +42,17 @@ export function LoginForm({
               <div className='grid gap-3'>
                 <div className='flex items-center'>
                   <Label htmlFor='password'>Password</Label>
-                  <a
+                  <Link
                     href='#'
-                    className='ml-auto inline-block text-sm underline-offset-4 hover:underline'
+                    className='ml-auto inline-block text-sm underline-offset-4 hover:underline text-brand-500'
                   >
                     Forgot your password?
-                  </a>
+                  </Link>
                 </div>
                 <Input id='password' name='password' type='password' required />
               </div>
               <div className='flex flex-col gap-3'>
-                <Button type='submit' formAction={login} className='w-full'>
+                <Button variant="primary" type='submit' formAction={login} className='w-full'>
                   Login
                 </Button>
                 <SignInWithGoogleButton />
@@ -60,7 +60,7 @@ export function LoginForm({
             </div>
             <div className='mt-4 text-center text-sm'>
               Don&apos;t have an account?{" "}
-              <Link href='/signup' className='underline underline-offset-4'>
+              <Link href='/signup' className='underline underline-offset-4 text-brand-500'>
                 Sign up
               </Link>
             </div>
