@@ -18,7 +18,7 @@ const ColumnCard = ({ index, column }: ColumnCardProps) => {
         <Card
           ref={provided.innerRef}
           {...provided.draggableProps}
-          className={`bg-gray-200 w-[300px] min-w-[300px] shrink-0 gap-3 ${
+          className={`bg-gray-50 w-[300px] min-w-[300px] shrink-0 pb-2 gap-3 ${
             snapshot.isDragging && "rotate-[4deg] opacity-90"
           }`}
           style={{ ...provided.draggableProps.style }}

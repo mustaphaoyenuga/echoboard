@@ -49,14 +49,14 @@ const HeroSection = () => {
             <img
               width='2432'
               height='1442'
-              src='/images/dark-project-app-screenshot.png'
+              src='/images/project-app-screenshot.png'
               alt='App screenshot'
               className='w-[76rem] rounded-md bg-teal-200/5 shadow-2xl shadow-brand-600 ring-brand-400 dark:hidden '
             />
             <img
               width='2432'
               height='1442'
-              src='/images/project-app-screenshot.png'
+              src='/images/dark-project-app-screenshot.png'
               alt='App screenshot'
               className='w-[76rem] rounded-md bg-teal-200/5 shadow-2xl shadow-purple-800 ring-teal-500 hidden dark:block'
             />

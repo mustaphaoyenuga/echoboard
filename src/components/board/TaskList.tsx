@@ -14,7 +14,7 @@ const TaskList = ({ columnId }: { columnId: string }) => {
           {...provided.droppableProps}
           className={`transition-all duration-200 rounded ${
             snapshot.isDraggingOver
-              ? "bg-gray-100 border-2 border-teal-300 border-dashed"
+              ? "bg-gray-100 border-2 border-brand-400 border-dashed"
               : ""
           } ${
             tasks.length === 0

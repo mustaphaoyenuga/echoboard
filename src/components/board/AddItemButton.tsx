@@ -32,7 +32,7 @@ const AddItemButton = ({ buttonText, onAdd }: AddItemButtonProps) => {
       onClick={() => setShowForm(true)}
       variant='secondary'
       size='lg'
-      className='w-full max-w-[300px] flex items-center cursor-pointer shadow-sm shrink-0 justify-start transition-colors duration-100'
+      className='w-full max-w-[300px] bg-gray-50 flex items-center shadow-none cursor-pointer shrink-0 justify-start transition-colors duration-100'
     >
       <Plus /> {buttonText}
     </Button>
