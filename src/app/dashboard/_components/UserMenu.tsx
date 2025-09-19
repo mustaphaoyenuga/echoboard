@@ -7,8 +7,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { createClient } from "@/utils/supabase/server";
+import LogoutButton from "./LogoutButton";
 
-const UserMenu = () => {
+export default async function UserMenu() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,18 +29,16 @@ const UserMenu = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end'>
         <DropdownMenuLabel className='flex flex-col space-y-1'>
-          <span className='font-medium'>Mustapha Oyenuga</span>
-          <span className='text-sm text-muted-foreground'>
-            musty1k4real@gmail.com
-          </span>
+          <span className='font-medium'>{user?.email}</span>
+          <span className='text-sm text-muted-foreground'>{user?.email}</span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
         <DropdownMenuItem>My Profile</DropdownMenuItem>
-        <DropdownMenuItem>Logout</DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <LogoutButton />
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
-
-export default UserMenu;
+}

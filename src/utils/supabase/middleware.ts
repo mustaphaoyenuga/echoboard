@@ -33,11 +33,27 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log('User in middleware:', user ? 'authenticated' : 'not authenticated');
-  console.log('Request path:', request.nextUrl.pathname);
+  const { pathname } = request.nextUrl;
+
+  const protectedRoutes = ["/dashboard"];
+  const authRoutes = ["/", "/login", "/signup"];
+
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+  const isAuthRoute = authRoutes.includes(pathname);
+
+  if (!user && isProtectedRoute) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.redirect(url);
+  }
+
+  if (user && isAuthRoute) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/dashboard";
+    return NextResponse.redirect(url);
+  }
+
   return supabaseResponse;
 }
-
-// export const config = {
-//   matcher: ['/private/:path*']
-// }
