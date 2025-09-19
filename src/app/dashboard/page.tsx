@@ -1,6 +1,10 @@
+import BoardList from "./_components/BoardList"
+
 const DashboardPage = () => {
   return (
-    <div>DashboardPage</div>
+    <div>
+      <BoardList />
+    </div>
   )
 }
 
