@@ -1,5 +1,9 @@
 "use client";
 
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { X } from "lucide-react";
+
 import {
   Popover,
   PopoverClose,
@@ -7,8 +11,9 @@ import {
   PopoverTrigger,
 } from "../ui/popover";
 import { Button } from "../ui/button";
-import { X } from "lucide-react";
-import { FormInput } from "./FormInput";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { useBoardStore } from "@/store/useBoardStore";
 
 interface FormPopoverProps {
   children: React.ReactNode;
@@ -23,6 +28,18 @@ const FormPopover = ({
   align,
   sideOffset = 0,
 }: FormPopoverProps) => {
+  const router = useRouter();
+  const [title, setTitle] = useState("");
+  const addBoard = useBoardStore((state) => state.addBoard);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!title.trim()) return;
+    const newBoard = addBoard(title);
+    setTitle("");
+    router.push(`/boards/${newBoard.id}`)
+  }
+
   return (
     <Popover>
       <PopoverTrigger>{children}</PopoverTrigger>
@@ -44,11 +61,12 @@ const FormPopover = ({
             <X className='size-4' />
           </Button>
         </PopoverClose>
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className='space-y-4'>
           <div className='space-y-4'>
-            <FormInput id="title" label="Board title" type="text" />
+            <Label htmlFor="board-title">Board Title</Label>
+            <Input id="board-title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
           </div>
-          <Button className="w-full">Create</Button>
+          <Button type="submit" className='w-full'>Create</Button>
         </form>
       </PopoverContent>
     </Popover>

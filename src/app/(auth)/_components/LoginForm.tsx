@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { login } from "../actions";
 import Link from "next/link";
 import SignInWithGoogleButton from "./SignInWithGoogleButton";
 
@@ -52,7 +51,12 @@ export function LoginForm({
                 <Input id='password' name='password' type='password' required />
               </div>
               <div className='flex flex-col gap-3'>
-                <Button variant="primary" type='submit' formAction={login} className='w-full'>
+                <Button
+                  variant='primary'
+                  type='submit'
+                  // formAction={login}
+                  className='w-full'
+                >
                   Login
                 </Button>
                 <SignInWithGoogleButton />
@@ -60,7 +64,10 @@ export function LoginForm({
             </div>
             <div className='mt-4 text-center text-sm'>
               Don&apos;t have an account?{" "}
-              <Link href='/signup' className='underline underline-offset-4 text-brand-500'>
+              <Link
+                href='/signup'
+                className='underline underline-offset-4 text-brand-500'
+              >
                 Sign up
               </Link>
             </div>

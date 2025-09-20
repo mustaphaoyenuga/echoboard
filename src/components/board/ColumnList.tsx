@@ -5,9 +5,9 @@ import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 import { useBoardStore } from "@/store/useBoardStore";
 import AddItemButton from "./AddItemButton";
 import ColumnCard from "./ColumnCard";
+import { Column } from "@/types";
 
-const ColumnList = () => {
-  const columns = useBoardStore((state) => state.columns);
+const ColumnList = ({ columns }: { columns: Column[] }) => {
   const addColumnCard = useBoardStore((state) => state.addColumnCard);
   const moveColumnCard = useBoardStore((state) => state.moveColumnCard);
   const moveTaskCard = useBoardStore((state) => state.moveTaskCard);

@@ -1,15 +1,17 @@
-import { findItemIndexById, generateUniqueId, insertItemAtIndex, moveItem } from "@/lib/utils";
-import { Task } from "@/types";
+import { nanoid } from "nanoid";
+import {
+  findItemIndexById,
+  generateUniqueId,
+  insertItemAtIndex,
+  moveItem,
+} from "@/lib/utils";
+import { Board, Column, Task } from "@/types";
 import { create } from "zustand";
-import { initialColumns } from "./initialBoardData";
-
-interface Column {
-  id: string;
-  title: string;
-  tasks: Task[];
-}
+import { initialBoards, initialColumns } from "./initialBoardData";
 
 interface BoardState {
+  boards: Board[];
+  addBoard: (title: string) => Board;
   columns: Column[];
   addColumnCard: (title: string) => void;
   moveColumnCard: (sourceIndex: number, destinationIndex: number) => void;
@@ -24,9 +26,23 @@ interface BoardState {
     destinationIndex: number
   ) => void;
   getTasksByListId: (id: string) => Task[];
+   getBoardById: (id: string) => Board | undefined
 }
 
 export const useBoardStore = create<BoardState>((set, get) => ({
+  boards: initialBoards,
+  addBoard: (title) => {
+    const newBoard: Board = {
+      id: nanoid(),
+      title,
+      columns: [],
+    };
+    set((state) => ({
+      boards: [...state.boards, newBoard],
+    }));
+    return newBoard;
+  },
+  getBoardById: (id) => get().boards.find(board => board.id === id),
   columns: initialColumns,
   getTasksByListId: (id: string) =>
     get().columns.find((column) => column.id === id)?.tasks || [],
@@ -56,15 +72,22 @@ export const useBoardStore = create<BoardState>((set, get) => ({
         title: `${columnToDuplicate.title} - copy`,
         tasks: columnToDuplicate.tasks.map((task) => ({
           ...task,
-          id: generateUniqueId(), 
+          id: generateUniqueId(),
         })),
       };
       return {
-        columns: insertItemAtIndex(state.columns, duplicatedColumn, indexOfcolumnToDuplicate + 1),
+        columns: insertItemAtIndex(
+          state.columns,
+          duplicatedColumn,
+          indexOfcolumnToDuplicate + 1
+        ),
       };
     }),
-    editColumnCardTitle: (columnId, newTitle) => set((state) => ({
-      columns: state.columns.map(column => column.id === columnId ? {...column, title: newTitle}: column)
+  editColumnCardTitle: (columnId, newTitle) =>
+    set((state) => ({
+      columns: state.columns.map((column) =>
+        column.id === columnId ? { ...column, title: newTitle } : column
+      ),
     })),
   addTaskCard: (columnId, title) =>
     set((state) => ({

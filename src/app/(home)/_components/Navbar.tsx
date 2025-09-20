@@ -42,13 +42,21 @@ const Navbar = () => {
           ))}
         </div>
 
-        <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
+        <div className='hidden lg:flex lg:flex-1 lg:justify-end lg:items-center gap-2'>
           <Button variant='ghost' asChild>
             <Link
               href='/login'
               className='text-sm/6 font-semibold text-gray-900 dark:text-gray-100'
             >
-              Log in <span aria-hidden='true'>&rarr;</span>
+              Log in
+            </Link>
+          </Button>
+          <Button variant='primary' asChild>
+            <Link
+              href='/signup'
+              className='text-sm/6 font-semibold'
+            >
+              Get Echobard for Free
             </Link>
           </Button>
         </div>

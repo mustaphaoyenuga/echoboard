@@ -1,5 +1,7 @@
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -29,31 +31,27 @@ const HeroSection = () => {
             lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat.
           </p>
           <div className='mt-10 flex items-center gap-6'>
-            <a
-              href='#'
-              className='rounded-md bg-brand-500 hover:bg-brand-400 px-3.5 py-2.5 text-sm/6 font-semibold text-white shadow-xs'
-            >
-              Get started
-            </a>
-            <a
-              href='#'
-              className='text-sm/6 font-semibold text-gray-900 dark:text-white'
-            >
-              Learn more <span aria-hidden='true'>→</span>
-            </a>
+            <Button variant='primary' asChild>
+              <Link href='/signup'>Get started</Link>
+            </Button>
+            <Button variant='ghost' asChild>
+              <Link href='/'>
+                Learn more <span aria-hidden='true'>→</span>
+              </Link>
+            </Button>
           </div>
         </div>
 
         <div className='mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:mt-0 lg:mr-0 lg:ml-10 lg:max-w-none lg:flex-none aefl aeft'>
           <div className='max-w-3xl flex-none sm:max-w-4xl lg:max-w-none'>
-            <img
+            <Image
               width='2432'
               height='1442'
               src='/images/project-app-screenshot.png'
               alt='App screenshot'
               className='w-[76rem] rounded-md bg-teal-200/5 shadow-2xl shadow-brand-600 ring-brand-400 dark:hidden '
             />
-            <img
+            <Image
               width='2432'
               height='1442'
               src='/images/dark-project-app-screenshot.png'

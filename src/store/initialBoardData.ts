@@ -24,3 +24,47 @@ export const initialColumns = [
     ],
   },
 ];
+
+export const initialBoards = [
+  {
+    id: "board-1",
+    title: "Frontend Team",
+    columns: initialColumns,
+  },
+  {
+    id: "board-2",
+    title: "Design Squad",
+    columns: [
+      {
+        id: "c15",
+        title: "Backlog",
+        tasks: [
+          { id: "c15t15", title: "Liase with Testers" },
+          { id: "c15t16", title: "Delete Database" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "board-3",
+    title: "Platform Dev",
+    columns: [
+      {
+        id: "c17",
+        title: "Assigned",
+        tasks: [
+          { id: "c17t16", title: "Running back to Man United" },
+          { id: "c17t18", title: "Sack Vicki from Teamlead" },
+        ],
+      },
+      {
+        id: "c18",
+        title: "Delivered",
+        tasks: [
+          { id: "c18t16", title: "Running back to Man United" },
+          { id: "c18t18", title: "Sack Vicki from Teamlead" },
+        ],
+      },
+    ],
+  },
+];
