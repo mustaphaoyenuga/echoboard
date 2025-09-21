@@ -20,7 +20,7 @@ const HeroSection = () => {
       </div>
       <div className='mx-auto max-w-7xl px-6 pt-10 pb-24 sm:pb-32 lg:flex lg:px-8 lg:py-44'>
         <div className='mx-auto max-w-2xl shrink-0 lg:mx-0 lg:pt-8'>
-          <Badge className='mt-10 sm:mt-24 lg:mt-16 dark:bg-brand-200' asChild>
+          <Badge variant="outline" className='mt-10 sm:mt-24 lg:mt-16 dark:bg-brand-200 text-brand-500 border-brand-500' asChild>
             <a href='#'>No 1 Task Management App</a>
           </Badge>
           <h1 className='mt-10 text-5xl font-semibold -tracking-wide text-pretty text-brand-900 dark:text-white sm:text-7xl'>
