@@ -12,7 +12,7 @@ type ColumnCardProps = {
   boardId: string;
 };
 const ColumnCard = ({ index, column, boardId }: ColumnCardProps) => {
-  const addTaskCard = useBoardStore((state) => state.addTaskCard);
+  const addTaskCard = useBoardStore((state) => state.addTask);
   return (
     <Draggable key={column.id} draggableId={column.id} index={index}>
       {(provided, snapshot) => (

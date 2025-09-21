@@ -13,8 +13,8 @@ const ColumnList = ({ boardId }: { boardId: string }) => {
   );
   const columns = getColumnsByBoardId(boardId);
   const addColumnCard = useBoardStore((state) => state.addColumn);
-  const moveColumnCard = useBoardStore((state) => state.moveColumnCard);
-  const moveTaskCard = useBoardStore((state) => state.moveTaskCard);
+  const moveColumnCard = useBoardStore((state) => state.moveColumn);
+  const moveTaskCard = useBoardStore((state) => state.moveTask);
 
   const handleDragEnd = (result: DropResult) => {
     const { destination, type, source } = result;

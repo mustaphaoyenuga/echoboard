@@ -33,12 +33,12 @@ interface ColumnHeaderProps {
   dragHandleProps?: any;
 }
 const ColumnHeader = ({ column, boardId, dragHandleProps }: ColumnHeaderProps) => {
-  const deleteColumnCard = useBoardStore((state) => state.deleteColumnCard);
+  const deleteColumnCard = useBoardStore((state) => state.deleteColumn);
   const duplicateColumnCard = useBoardStore(
-    (state) => state.duplicateColumnCard
+    (state) => state.duplicateColumn
   );
   const editColumnCardTitle = useBoardStore(
-    (state) => state.editColumnCardTitle
+    (state) => state.editColumnTitle
   );
   const getTasksByColumnId = useBoardStore((state) => state.getTasksByColumnId);
   const tasks = getTasksByColumnId(boardId, column.id);

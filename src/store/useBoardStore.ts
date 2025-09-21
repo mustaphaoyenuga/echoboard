@@ -15,12 +15,12 @@ interface BoardState {
   setCurrentBoardId: (boardId: string) => void;
   addBoard: (title: string) => Board;
   addColumn: (title: string) => void;
-  moveColumnCard: (sourceIndex: number, destinationIndex: number) => void;
-  deleteColumnCard: (columnId: string) => void;
-  duplicateColumnCard: (columnId: string) => void;
-  editColumnCardTitle: (columnId: string, newTitle: string) => void;
-  addTaskCard: (columnId: string, title: string) => void;
-  moveTaskCard: (
+  moveColumn: (sourceIndex: number, destinationIndex: number) => void;
+  deleteColumn: (columnId: string) => void;
+  duplicateColumn: (columnId: string) => void;
+  editColumnTitle: (columnId: string, newTitle: string) => void;
+  addTask: (columnId: string, title: string) => void;
+  moveTask: (
     sourceColumnId: string,
     destinationColumnId: string,
     sourceIndex: number,
@@ -46,7 +46,6 @@ export const useBoardStore = create<BoardState>((set, get) => ({
     }));
     return newBoard;
   },
-
   addColumn: (title) =>
     set((state) => {
       const boardId = state.currentBoardId;
@@ -67,52 +66,100 @@ export const useBoardStore = create<BoardState>((set, get) => ({
         },
       };
     }),
-  moveColumnCard: (sourceIndex, destinationIndex) =>
-    set((state) => ({
-      // columns: moveItem(state.columns, sourceIndex, destinationIndex),
-      boards: { ...state.boards },
-    })),
-  deleteColumnCard: (columnId) =>
-    set((state) => ({
-      // columns: state.columns.filter((column) => column.id !== columnId),
-      boards: { ...state.boards },
-    })),
-  duplicateColumnCard: (columnId) =>
+  moveColumn: (sourceIndex, destinationIndex) =>
     set((state) => {
-      // const indexOfcolumnToDuplicate = state.columns.findIndex(
-      //   (column) => column.id === columnId
-      // );
-      // if (indexOfcolumnToDuplicate === -1) return state;
+      const boardId = state.currentBoardId;
+      if (!boardId) return state;
 
-      // const columnToDuplicate = state.columns[indexOfcolumnToDuplicate];
-      // const duplicatedColumn = {
-      //   ...columnToDuplicate,
-      //   id: generateUniqueId(),
-      //   title: `${columnToDuplicate.title} - copy`,
-      //   tasks: columnToDuplicate.tasks.map((task) => ({
-      //     ...task,
-      //     id: generateUniqueId(),
-      //   })),
-      // };
-      // return {
-      //   columns: insertItemAtIndex(
-      //     state.columns,
-      //     duplicatedColumn,
-      //     indexOfcolumnToDuplicate + 1
-      //   ),
-      // };
+      const board = state.boards[boardId];
+      if (!board) return state;
+
       return {
-        boards: { ...state.boards },
+        boards: {
+          ...state.boards,
+          [boardId]: {
+            ...board,
+            columns: moveItem(board.columns, sourceIndex, destinationIndex),
+          },
+        },
       };
     }),
-  editColumnCardTitle: (columnId, newTitle) =>
-    set((state) => ({
-      boards: { ...state.boards },
-      // columns: state.columns.map((column) =>
-      //   column.id === columnId ? { ...column, title: newTitle } : column
-      // ),
-    })),
-  addTaskCard: (columnId, title) =>
+  deleteColumn: (columnId) =>
+    set((state) => {
+      const boardId = state.currentBoardId;
+      if (!boardId) return state;
+
+      const board = state.boards[boardId];
+      if (!board) return state;
+
+      return {
+        boards: {
+          ...state.boards,
+          [boardId]: {
+            ...board,
+            columns: board.columns.filter((column) => column.id !== columnId),
+          },
+        },
+      };
+    }),
+  duplicateColumn: (columnId) =>
+    set((state) => {
+      const boardId = state.currentBoardId;
+      if (!boardId) return state;
+
+      const board = state.boards[boardId];
+      if (!board) return state;
+
+      const indexOfcolumnToDuplicate = board.columns.findIndex(
+        (column) => column.id === columnId
+      );
+      if (indexOfcolumnToDuplicate === -1) return state;
+
+      const columnToDuplicate = board.columns[indexOfcolumnToDuplicate];
+      const duplicatedColumn = {
+        ...columnToDuplicate,
+        id: generateUniqueId(),
+        title: `${columnToDuplicate.title} - copy`,
+        tasks: columnToDuplicate.tasks.map((task) => ({
+          ...task,
+          id: generateUniqueId(),
+        })),
+      };
+      return {
+        boards: {
+          ...state.boards,
+          [boardId]: {
+            ...board,
+            columns: insertItemAtIndex(
+              board.columns,
+              duplicatedColumn,
+              indexOfcolumnToDuplicate + 1
+            ),
+          },
+        },
+      };
+    }),
+  editColumnTitle: (columnId, newTitle) =>
+    set((state) => {
+      const boardId = state.currentBoardId;
+      if (!boardId) return state;
+
+      const board = state.boards[boardId];
+      if (!board) return state;
+
+      return {
+        boards: {
+          ...state.boards,
+          [boardId]: {
+            ...board,
+            columns: board.columns.map((column) =>
+              column.id === columnId ? { ...column, title: newTitle } : column
+            ),
+          },
+        },
+      };
+    }),
+  addTask: (columnId, title) =>
     set((state) => {
       const boardId = state.currentBoardId;
       if (!boardId) return state;
@@ -134,71 +181,78 @@ export const useBoardStore = create<BoardState>((set, get) => ({
           },
         },
       };
-      // columns: state.columns.map((column) =>
-      //   column.id === columnId
-      //     ? {
-      //         ...column,
-      //         tasks: [...column.tasks, { id: generateUniqueId(), title }],
-      //       }
-      //     : column
-      // ),
     }),
-  moveTaskCard: (
+  moveTask: (
     sourceColumnId,
     destinationColumnId,
     sourceIndex,
     destinationIndex
   ) =>
     set((state) => {
-      // const columns = [...state.columns];
-      // const sourceColumnIndex = findItemIndexById(columns, sourceColumnId);
-      // const destinationColumnIndex = findItemIndexById(
-      //   columns,
-      //   destinationColumnId
-      // );
-      // if (sourceColumnIndex === -1 || destinationColumnIndex === -1) {
-      //   return state;
-      // }
-      // const sourceColumnTasks = columns[sourceColumnIndex].tasks;
-      // const destinationColumnTasks = columns[destinationColumnIndex].tasks;
+      const boardId = state.currentBoardId;
+      if (!boardId) return state;
+
+      const board = state.boards[boardId];
+      if (!board) return state;
+
+      const columns = [...board.columns];
+      const sourceColumnIndex = findItemIndexById(columns, sourceColumnId);
+      const destinationColumnIndex = findItemIndexById(
+        columns,
+        destinationColumnId
+      );
+      if (sourceColumnIndex === -1 || destinationColumnIndex === -1) {
+        return state;
+      }
+      const sourceColumnTasks = columns[sourceColumnIndex].tasks;
+      const destinationColumnTasks = columns[destinationColumnIndex].tasks;
 
       //moving within same column
-      // if (sourceColumnId === destinationColumnId) {
-      //   const reorderedTasks = moveItem(
-      //     sourceColumnTasks,
-      //     sourceIndex,
-      //     destinationIndex
-      //   );
-      //   return {
-      //     columns: columns.map((column, index) =>
-      //       index === sourceColumnIndex
-      //         ? { ...column, tasks: reorderedTasks }
-      //         : column
-      //     ),
-      //   };
-      // }
+      if (sourceColumnId === destinationColumnId) {
+        const reorderedTasks = moveItem(
+          sourceColumnTasks,
+          sourceIndex,
+          destinationIndex
+        );
+        return {
+          boards: {
+            ...state.boards,
+            [boardId]: {
+              ...board,
+              columns: columns.map((column, index) =>
+                index === sourceColumnIndex
+                  ? { ...column, tasks: reorderedTasks }
+                  : column
+              ),
+            },
+          },
+        };
+      }
 
       //moving between different columns
-      // const sourceTask = sourceColumnTasks[sourceIndex];
-      // const newSourceTasks = sourceColumnTasks.filter(
-      //   (_, index) => index !== sourceIndex
-      // );
-      // const newDestinationTasks = [...destinationColumnTasks];
-      // newDestinationTasks.splice(destinationIndex, 0, sourceTask);
+      const sourceTask = sourceColumnTasks[sourceIndex];
+      const newSourceTasks = sourceColumnTasks.filter(
+        (_, index) => index !== sourceIndex
+      );
+      const newDestinationTasks = [...destinationColumnTasks];
+      newDestinationTasks.splice(destinationIndex, 0, sourceTask);
 
-      // return {
-      //   columns: state.columns.map((column, index) => {
-      //     if (index === sourceColumnIndex) {
-      //       return { ...column, tasks: newSourceTasks };
-      //     }
-      //     if (index === destinationColumnIndex) {
-      //       return { ...column, tasks: newDestinationTasks };
-      //     }
-      //     return column;
-      //   }),
-      // };
       return {
-        boards: { ...state.boards },
+        boards: {
+          ...state.boards,
+          [boardId]: {
+            ...board,
+            columns: columns.map((column, index) => {
+              if (index === sourceColumnIndex) {
+                return { ...column, tasks: newSourceTasks };
+              }
+              if (index === destinationColumnIndex) {
+                return { ...column, tasks: newDestinationTasks };
+              }
+              return column;
+            }),
+          },
+        },
       };
     }),
   getColumnsByBoardId: (boardId: string) => get().boards[boardId].columns || [],
