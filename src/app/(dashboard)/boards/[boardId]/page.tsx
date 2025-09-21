@@ -1,19 +1,26 @@
 "use client";
-import ColumnList from "@/components/board/ColumnList";
-import Navbar from "../../_components/Navbar";
+
 import { useParams } from "next/navigation";
+
+import ColumnList from "@/components/board/ColumnList";
+import Navbar from "@/app/(dashboard)/_components/Navbar";
 import { useBoardStore } from "@/store/useBoardStore";
+import { useEffect } from "react";
 
-type BoardPageProps = {};
-
-export default function BoardPage({}: BoardPageProps) {
+export default function BoardPage() {
   const { boardId } = useParams() as { boardId: string };
-  const getBoardById = useBoardStore((state) => state.getBoardById);
-  const board = getBoardById(boardId);
+  const board = useBoardStore((state) => state.boards[boardId]);
+  const setCurrentBoardId = useBoardStore((state) => state.setCurrentBoardId);
+
+  useEffect(() => {
+    if (boardId) {
+      setCurrentBoardId(boardId);
+    }
+  }, [boardId, setCurrentBoardId]);
   return (
     <div>
       <Navbar topnavTitle={board?.title} />
-      <ColumnList columns={board?.columns ?? []} />
+      <ColumnList boardId={boardId} />
     </div>
   );
 }

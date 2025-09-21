@@ -2,9 +2,9 @@ import { useBoardStore } from "@/store/useBoardStore";
 import { Droppable } from "@hello-pangea/dnd";
 import TaskCard from "./TaskCard";
 
-const TaskList = ({ columnId }: { columnId: string }) => {
-  const getTasksByListId = useBoardStore((state) => state.getTasksByListId);
-  const tasks = getTasksByListId(columnId);
+const TaskList = ({  boardId, columnId }: { boardId: string; columnId: string }) => {
+  const getTasksByColumnId = useBoardStore((state) => state.getTasksByColumnId);
+  const tasks = getTasksByColumnId(boardId, columnId);
 
   return (
     <Droppable droppableId={columnId} type='CARD'>

@@ -37,8 +37,8 @@ const FormPopover = ({
     if (!title.trim()) return;
     const newBoard = addBoard(title);
     setTitle("");
-    router.push(`/boards/${newBoard.id}`)
-  }
+    // router.push(`/boards/${newBoard.id}`);
+  };
 
   return (
     <Popover>
@@ -63,10 +63,18 @@ const FormPopover = ({
         </PopoverClose>
         <form onSubmit={handleSubmit} className='space-y-4'>
           <div className='space-y-4'>
-            <Label htmlFor="board-title">Board Title</Label>
-            <Input id="board-title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+            <Label htmlFor='board-title'>Board Title</Label>
+            <Input
+              id='board-title'
+              type='text'
+              value={title}
+              autoFocus
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </div>
-          <Button type="submit" className='w-full'>Create</Button>
+          <Button type='submit' variant='primary' className='w-full'>
+            Create
+          </Button>
         </form>
       </PopoverContent>
     </Popover>

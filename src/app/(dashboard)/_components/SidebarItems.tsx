@@ -78,7 +78,7 @@ const SidebarItems = () => {
         <SidebarGroupLabel className='text-sm'>All boards</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
-            {boards.map((board) => (
+            {Object.values(boards).map((board) => (
               <SidebarMenuItem key={board.id}>
                 <Button
                   variant='ghost'

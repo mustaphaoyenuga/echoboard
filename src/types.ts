@@ -16,3 +16,5 @@ export type Board = {
   title: string;
   columns: Column[];
 };
+
+export type Boards = Record<string, Board>;

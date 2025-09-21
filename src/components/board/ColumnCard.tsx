@@ -9,8 +9,9 @@ import ColumnHeader from "./ColumnHeader";
 type ColumnCardProps = {
   index: number;
   column: { id: string; title: string };
+  boardId: string;
 };
-const ColumnCard = ({ index, column }: ColumnCardProps) => {
+const ColumnCard = ({ index, column, boardId }: ColumnCardProps) => {
   const addTaskCard = useBoardStore((state) => state.addTaskCard);
   return (
     <Draggable key={column.id} draggableId={column.id} index={index}>
@@ -25,11 +26,12 @@ const ColumnCard = ({ index, column }: ColumnCardProps) => {
         >
           <ColumnHeader
             column={column}
+            boardId={boardId}
             dragHandleProps={provided.dragHandleProps}
           />
 
           <CardContent className='px-2'>
-            <TaskList columnId={column.id} />
+            <TaskList boardId={boardId} columnId={column.id} />
           </CardContent>
 
           <CardFooter className='px-2'>

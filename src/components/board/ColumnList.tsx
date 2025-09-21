@@ -7,8 +7,12 @@ import AddItemButton from "./AddItemButton";
 import ColumnCard from "./ColumnCard";
 import { Column } from "@/types";
 
-const ColumnList = ({ columns }: { columns: Column[] }) => {
-  const addColumnCard = useBoardStore((state) => state.addColumnCard);
+const ColumnList = ({ boardId }: { boardId: string }) => {
+  const getColumnsByBoardId = useBoardStore(
+    (state) => state.getColumnsByBoardId
+  );
+  const columns = getColumnsByBoardId(boardId);
+  const addColumnCard = useBoardStore((state) => state.addColumn);
   const moveColumnCard = useBoardStore((state) => state.moveColumnCard);
   const moveTaskCard = useBoardStore((state) => state.moveTaskCard);
 
@@ -45,7 +49,12 @@ const ColumnList = ({ columns }: { columns: Column[] }) => {
             className='flex items-start gap-x-5'
           >
             {columns.map((column, index) => (
-              <ColumnCard key={column.id} column={column} index={index} />
+              <ColumnCard
+                key={column.id}
+                boardId={boardId}
+                column={column}
+                index={index}
+              />
             ))}
 
             {provided.placeholder}
