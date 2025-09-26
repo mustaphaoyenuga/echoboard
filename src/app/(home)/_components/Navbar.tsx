@@ -56,7 +56,7 @@ const Navbar = () => {
               href='/signup'
               className='text-sm/6 font-semibold'
             >
-              Get Echobard for Free
+              Try Echobard for Free
             </Link>
           </Button>
         </div>
