@@ -1,6 +1,45 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
+interface FeatureRowProps {
+  title: string;
+  subtitle: string;
+  description: string;
+  imageSrc: string;
+  buttonText?: string;
+  reverse?: boolean;
+}
+const FeatureRow = ({
+  title,
+  subtitle,
+  description,
+  imageSrc,
+  buttonText = "Get Started",
+  reverse = false,
+}: FeatureRowProps) => (
+  <div
+    className={`flex flex-col md:flex-row md:*:flex-1 gap-10 mb-28 ${
+      reverse ? "md:flex-row-reverse" : ""
+    }`}
+  >
+    <div className='py-6'>
+      <p className='uppercase text-brand-400 mb-2'>{subtitle}</p>
+      <h4 className='font-semibold text-3xl md:text-4xl mb-4'>{title}</h4>
+      <p className='mb-8 text-lg text-gray-700'>{description}</p>
+      <Button variant='primary'>{buttonText}</Button>
+    </div>
+
+    <div className='w-full h-[300px] relative'>
+      <Image
+        src={imageSrc}
+        alt={title}
+        fill
+        className='object-cover rounded-2xl shadow'
+      />
+    </div>
+  </div>
+);
+
 const FeaturesSection = () => {
   return (
     <div className='mx-auto mt-2 max-w-7xl px-6 sm:mt-44 lg:px-8'>
@@ -16,34 +55,23 @@ const FeaturesSection = () => {
           efficient task management, and boosted productivity.
         </p>
       </div>
-      <div className='flex *:flex-1 mb-28'>
-        <div className="pr-10 py-10">
-          <p className='uppercase text-brand-400 mb-2'>Instant sync</p>
-          <p className="font-semibold text-4xl mb-4">Real-Time Collaboration</p>
-          <p className="mb-8 text-lg">
-            Keep everyone on the same page with instant updates and shared
-            workspaces. Keep everyone on the same page with real time updates.
-          </p>
-          <Button variant="primary">Get Started</Button>
-        </div>
-        <div className="w-full h-auto relative">
-          <Image src='/images/features-1.PNG' alt="" fill className="object-cover rounded-lg" />
-        </div>
-      </div>
-      <div className='flex *:flex-1 flex-row-reverse'>
-        <div className="pr-10 py-10">
-          <p className='uppercase text-brand-400 mb-2'>Instant sync</p>
-          <p className="font-semibold text-4xl mb-4">Real-Time Collaboration</p>
-          <p className="mb-8 text-lg">
-            Keep everyone on the same page with instant updates and shared
-            workspaces. Keep everyone on the same page with real time updates.
-          </p>
-          <Button variant="primary">Get Started</Button>
-        </div>
-        <div className="w-full h-auto relative">
-          <Image src='/images/features-1.PNG' alt="" fill className="object-cover rounded-lg" />
-        </div>
-      </div>
+      <FeatureRow
+        subtitle='Instant sync'
+        title='Real-Time Collaboration'
+        description='Keep everyone on the same page with instant updates and shared
+            workspaces. Keep everyone on the same page with real time updates.'
+        imageSrc='/images/features-1.PNG'
+      />
+
+      <FeatureRow
+        title='In-App Messaging'
+        subtitle='Seamless Communication'
+        description='Streamline team communication by discussing tasks directly within
+            the platform. Streamline team communication by discussing tasks
+            directly.'
+        imageSrc='/images/features-1.PNG'
+        reverse
+      />
     </div>
   );
 };
