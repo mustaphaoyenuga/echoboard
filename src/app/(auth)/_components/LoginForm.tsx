@@ -16,6 +16,7 @@ import SignInWithGoogleButton from "./SignInWithGoogleButton";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema, loginSchema } from "@/validation";
+import { login } from "../actions";
 
 export function LoginForm({
   className,
@@ -28,7 +29,15 @@ export function LoginForm({
   } = useForm<LoginSchema>({ resolver: zodResolver(loginSchema) });
 
   const onSubmit = async (data: LoginSchema) => {
-    console.log("Login data:", data);
+    const formData = new FormData();
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
+    try {
+      await login(formData)
+    } catch (error) {
+      console.error("Login failed", error)
+    }
   };
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -80,7 +89,7 @@ export function LoginForm({
                   variant='primary'
                   type='submit'
                   disabled={isSubmitting}
-                  className='w-full'
+                  className='w-full cursor-pointer'
                 >
                   {isSubmitting ? "Logging in..." : "Login"}
                 </Button>
