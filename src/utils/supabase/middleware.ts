@@ -7,6 +7,7 @@ const PUBLIC_ROUTES = [
   "/forgot-password",
   "/auth",
   "/error",
+  "/verify-email"
 ];
 const AUTH_ROUTES = ["/", "/login", "/signup", "/forgot-password"];
 
@@ -68,7 +69,7 @@ export async function updateSession(request: NextRequest) {
 
   if (user && isAuthRoute(pathname)) {
      const url = request.nextUrl.clone();
-    url.pathname = "/provate";
+    url.pathname = "/boards";
     return NextResponse.redirect(url);
   }
 

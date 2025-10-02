@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema, SignupSchema } from "@/validation";
+import { signup } from "../actions";
 
 export function SignupForm({
   className,
@@ -26,9 +28,25 @@ export function SignupForm({
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<SignupSchema>({ resolver: zodResolver(signupSchema) });
+  const router = useRouter();
 
   const onSubmit = async (data: SignupSchema) => {
-    console.log("Login data:", data);
+    const formData = new FormData();
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
+    try {
+      const result = await signup(formData);
+      if (result?.error) {
+        console.error("sign up failed", result.error);
+        return;
+      }
+      if (result.email) {
+        router.push(`/verify-email?email=${encodeURIComponent(result.email)}`);
+      }
+    } catch (error) {
+      console.error("Sign up failed", error);
+    }
   };
 
   return (
