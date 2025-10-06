@@ -1,22 +1,17 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PUBLIC_ROUTES = [
-  "/login",
-  "/signup",
-  "/forgot-password",
-  "/auth",
-  "/error",
-  "/verify-email"
-];
+//Redirect logged in users away from these auth pages
 const AUTH_ROUTES = ["/", "/login", "/signup", "/forgot-password"];
-
-function isPublicRoute(pathname: string) {
-  return PUBLIC_ROUTES.some((route) => pathname.startsWith(route));
-}
+const PRIVATE_ROUTES = ["/boards", "/settings"];
 
 function isAuthRoute(pathname: string) {
   return AUTH_ROUTES.some((route) => pathname === route);
+}
+function isPrivateRoute(pathname: string) {
+  return PRIVATE_ROUTES.some(
+    (route) => pathname === route || pathname.startsWith(route + "/")
+  );
 }
 
 export async function updateSession(request: NextRequest) {
@@ -57,18 +52,16 @@ export async function updateSession(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
-  // if user is not logged in, don't allow to visit dashboard
-  if (!user) {
-    if (pathname === "/" || isPublicRoute(pathname)) {
-      return supabaseResponse;
-    }
+  // if user is not logged in, don't allow to visit private routes
+ 
+  if (!user && isPrivateRoute(pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
   }
 
   if (user && isAuthRoute(pathname)) {
-     const url = request.nextUrl.clone();
+    const url = request.nextUrl.clone();
     url.pathname = "/boards";
     return NextResponse.redirect(url);
   }
