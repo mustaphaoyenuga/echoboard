@@ -42,7 +42,7 @@ const FeatureRow = ({
 
 const FeaturesSection = () => {
   return (
-    <div className='mx-auto mt-2 max-w-7xl px-6 sm:mt-44 lg:px-8'>
+    <div className='mx-auto mt-2 max-w-7xl py-12 lg:py-0 px-6 sm:mt-44 lg:px-8'>
       <div className='mx-auto max-w-[44rem] lg:text-center flex flex-col items-center mb-10'>
         <h2 className='font-semibold border rounded-full px-8 py-2 text-gray-800 bg-brand-50 mb-4'>
           Features
