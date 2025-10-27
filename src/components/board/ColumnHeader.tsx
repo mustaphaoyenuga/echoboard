@@ -29,18 +29,19 @@ import RenameColumnForm from "./RenameColumnForm";
 
 interface ColumnHeaderProps {
   column: { id: string; title: string };
+  boardId: string;
   dragHandleProps?: any;
 }
-const ColumnHeader = ({ column, dragHandleProps }: ColumnHeaderProps) => {
-  const deleteColumnCard = useBoardStore((state) => state.deleteColumnCard);
+const ColumnHeader = ({ column, boardId, dragHandleProps }: ColumnHeaderProps) => {
+  const deleteColumnCard = useBoardStore((state) => state.deleteColumn);
   const duplicateColumnCard = useBoardStore(
-    (state) => state.duplicateColumnCard
+    (state) => state.duplicateColumn
   );
   const editColumnCardTitle = useBoardStore(
-    (state) => state.editColumnCardTitle
+    (state) => state.editColumnTitle
   );
-  const getTasksByListId = useBoardStore((state) => state.getTasksByListId);
-  const tasks = getTasksByListId(column.id);
+  const getTasksByColumnId = useBoardStore((state) => state.getTasksByColumnId);
+  const tasks = getTasksByColumnId(boardId, column.id);
 
   const [isEditing, setIsEditing] = useState(false);
 

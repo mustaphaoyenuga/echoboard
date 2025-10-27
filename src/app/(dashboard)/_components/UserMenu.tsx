@@ -7,15 +7,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { createClient } from "@/utils/supabase/server";
 import LogoutButton from "./LogoutButton";
 
-export default async function UserMenu() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+export default function UserMenu() {
+const user = {
+  email: 'musty1k4real@gmail.com',
+  name: 'Mustapha Oyenuga'
+}
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

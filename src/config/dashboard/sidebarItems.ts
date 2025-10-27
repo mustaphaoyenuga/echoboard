@@ -10,20 +10,9 @@ export const sidebarItems = [
         url: "/",
         icon: Plus,
       },
-    ],
-  },
-  {
-    id: "id1",
-    label: "All Boards",
-    items: [
       {
-        title: "Platform Launch",
-        url: "/",
-        icon: LayoutDashboard,
-      },
-      {
-        title: "Marketing Plan",
-        url: "/",
+        title: "My Boards",
+        url: "/boards",
         icon: ListTodo,
       },
     ],

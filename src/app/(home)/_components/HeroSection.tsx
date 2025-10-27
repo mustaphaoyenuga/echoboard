@@ -1,5 +1,7 @@
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -18,42 +20,42 @@ const HeroSection = () => {
       </div>
       <div className='mx-auto max-w-7xl px-6 pt-10 pb-24 sm:pb-32 lg:flex lg:px-8 lg:py-44'>
         <div className='mx-auto max-w-2xl shrink-0 lg:mx-0 lg:pt-8'>
-          <Badge className='mt-10 sm:mt-24 lg:mt-16 dark:bg-brand-200' asChild>
-            <a href='#'>No 1 Task Management App</a>
+          <Badge
+            variant='outline'
+            className='mt-10 sm:mt-24 lg:mt-16 dark:bg-brand-200 text-brand-500 border-brand-500'
+            asChild
+          >
+            <a href='#'>Streamline your workflow with ease</a>
           </Badge>
           <h1 className='mt-10 text-5xl font-semibold -tracking-wide text-pretty text-brand-900 dark:text-white sm:text-7xl'>
-            Deploy to the cloud with confidence
+            All you need for seamless project management
           </h1>
           <p className='mt-8 text-lg font-medium text-pretty text-gray-600 dark:text-gray-200 sm:text-xl'>
-            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-            lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat.
+            Empower your team with an intuitive project mangement tool that
+            keeps your work organized and your goals in sight
           </p>
           <div className='mt-10 flex items-center gap-6'>
-            <a
-              href='#'
-              className='rounded-md bg-brand-500 hover:bg-brand-400 px-3.5 py-2.5 text-sm/6 font-semibold text-white shadow-xs'
-            >
-              Get started
-            </a>
-            <a
-              href='#'
-              className='text-sm/6 font-semibold text-gray-900 dark:text-white'
-            >
-              Learn more <span aria-hidden='true'>→</span>
-            </a>
+            <Button variant='primary' asChild>
+              <Link href='/signup'>Get started</Link>
+            </Button>
+            <Button variant='ghost' asChild>
+              <Link href='/'>
+                Learn more <span aria-hidden='true'>→</span>
+              </Link>
+            </Button>
           </div>
         </div>
 
         <div className='mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:mt-0 lg:mr-0 lg:ml-10 lg:max-w-none lg:flex-none aefl aeft'>
           <div className='max-w-3xl flex-none sm:max-w-4xl lg:max-w-none'>
-            <img
+            <Image
               width='2432'
               height='1442'
               src='/images/project-app-screenshot.png'
               alt='App screenshot'
               className='w-[76rem] rounded-md bg-teal-200/5 shadow-2xl shadow-brand-600 ring-brand-400 dark:hidden '
             />
-            <img
+            <Image
               width='2432'
               height='1442'
               src='/images/dark-project-app-screenshot.png'

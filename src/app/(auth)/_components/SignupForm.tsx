@@ -9,13 +9,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signup } from "../actions";
 import Link from "next/link";
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -48,7 +48,7 @@ export function SignupForm({
                 <Button
                   variant='primary'
                   type='submit'
-                  formAction={signup}
+                  // formAction={signup}
                   className='w-full'
                 >
                   Sign up
