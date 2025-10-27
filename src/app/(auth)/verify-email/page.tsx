@@ -1,22 +1,33 @@
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Mail } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
-const VerifyEmailPage = () => {
+interface VerifyEmailPageProps {
+  searchParams: { email?: string };
+}
+
+const VerifyEmailPage = ({ searchParams }: VerifyEmailPageProps) => {
+  const email = searchParams.email;
   return (
     <div className='min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8'>
       <div className='max-w-md w-full space-y-8'>
         <div className='text-center'>
-          {/* Email icon */}
-          <Mail className="size-12 text-brand-500 mx-auto" />
-          
+          <Image
+            src='/svgs/mail-sent.svg'
+            alt='An illustration of mail sent'
+            width={200}
+            height={200}
+            className='mx-auto'
+          />
+
           <h2 className='mt-6 text-3xl font-bold text-gray-900'>
-            Check your email
+            Almost done! 🎉
           </h2>
 
-          <p className='mt-2 text-sm text-gray-600'>
-            We've sent a confirmation link to your email address. Please click
-            the link to verify your account and complete your registration.
+          <p className='mt-2 text-gray-600'>
+            We've sent a confirmation link to <span className="font-medium text-gray-900">{email}</span>. Please check
+            your inbox and click the link to activate your account.
           </p>
         </div>
 
@@ -34,8 +45,10 @@ const VerifyEmailPage = () => {
           </div>
 
           <div className='text-center'>
-            <Button variant="outline" asChild>
-              <Link href='/login'><ArrowLeft /> Back to login</Link>
+            <Button variant='outline' asChild>
+              <Link href='/login' className='text-brand-500'>
+                <ArrowLeft /> Back to login
+              </Link>
             </Button>
           </div>
         </div>

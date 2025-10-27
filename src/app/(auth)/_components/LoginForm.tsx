@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,11 +13,32 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import SignInWithGoogleButton from "./SignInWithGoogleButton";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginSchema, loginSchema } from "@/validation";
+import { login } from "../actions";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginSchema>({ resolver: zodResolver(loginSchema) });
+
+  const onSubmit = async (data: LoginSchema) => {
+    const formData = new FormData();
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
+    try {
+      await login(formData)
+    } catch (error) {
+      console.error("Login failed", error)
+    }
+  };
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -26,17 +49,19 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className='flex flex-col gap-6'>
               <div className='grid gap-3'>
                 <Label htmlFor='email'>Email</Label>
                 <Input
                   id='email'
                   type='email'
-                  name='email'
                   placeholder='m@example.com'
-                  required
+                  {...register("email")}
                 />
+                {errors.email && (
+                  <p className='text-red-500 text-xs'>{errors.email.message}</p>
+                )}
               </div>
               <div className='grid gap-3'>
                 <div className='flex items-center'>
@@ -48,16 +73,25 @@ export function LoginForm({
                     Forgot your password?
                   </Link>
                 </div>
-                <Input id='password' name='password' type='password' required />
+                <Input
+                  id='password'
+                  type='password'
+                  {...register("password")}
+                />
+                {errors.password && (
+                  <p className='text-red-500 text-xs'>
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
               <div className='flex flex-col gap-3'>
                 <Button
                   variant='primary'
                   type='submit'
-                  // formAction={login}
-                  className='w-full'
+                  disabled={isSubmitting}
+                  className='w-full cursor-pointer'
                 >
-                  Login
+                  {isSubmitting ? "Logging in..." : "Login"}
                 </Button>
                 <SignInWithGoogleButton />
               </div>
@@ -66,7 +100,7 @@ export function LoginForm({
               Don&apos;t have an account?{" "}
               <Link
                 href='/signup'
-                className='underline underline-offset-4 text-brand-500'
+                className='underline underline-offset-4 font-normal text-brand-500'
               >
                 Sign up
               </Link>

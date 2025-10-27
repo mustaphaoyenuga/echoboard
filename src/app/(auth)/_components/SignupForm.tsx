@@ -1,3 +1,8 @@
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,13 +14,41 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signupSchema, SignupSchema } from "@/validation";
+import { signup } from "../actions";
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<SignupSchema>({ resolver: zodResolver(signupSchema) });
+  const router = useRouter();
+
+  const onSubmit = async (data: SignupSchema) => {
+    const formData = new FormData();
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+
+    try {
+      const result = await signup(formData);
+      if (result?.error) {
+        console.error("sign up failed", result.error);
+        return;
+      }
+      if (result.email) {
+        router.push(`/verify-email?email=${encodeURIComponent(result.email)}`);
+      }
+    } catch (error) {
+      console.error("Sign up failed", error);
+    }
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -26,32 +59,58 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className='flex flex-col gap-6'>
               <div className='grid gap-3'>
                 <Label htmlFor='email'>Email</Label>
                 <Input
                   id='email'
                   type='email'
-                  name='email'
                   placeholder='m@example.com'
-                  required
+                  {...register("email")}
                 />
+                {errors.email && (
+                  <p className='text-red-500 text-xs'>{errors.email.message}</p>
+                )}
               </div>
               <div className='grid gap-3'>
                 <div className='flex items-center'>
                   <Label htmlFor='password'>Password</Label>
                 </div>
-                <Input id='password' name='password' type='password' required />
+                <Input
+                  id='password'
+                  type='password'
+                  {...register("password")}
+                />
+                {errors.password && (
+                  <p className='text-red-500 text-xs'>
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
+              <div className='grid gap-3'>
+                <div className='flex items-center'>
+                  <Label htmlFor='confirmPassword'>Confirm Password</Label>
+                </div>
+                <Input
+                  id='confirmPassword'
+                  type='password'
+                  {...register("confirmPassword")}
+                />
+                {errors.confirmPassword && (
+                  <p className='text-red-500 text-xs'>
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
               </div>
               <div className='flex flex-col gap-3'>
                 <Button
                   variant='primary'
                   type='submit'
-                  // formAction={signup}
+                  disabled={isSubmitting}
                   className='w-full'
                 >
-                  Sign up
+                  {isSubmitting ? "Signing up..." : "Sign up"}
                 </Button>
               </div>
             </div>
