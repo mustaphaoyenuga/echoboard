@@ -1,4 +1,5 @@
 import BenefitsSection from "./_components/BenefitsSection";
+import FaqSection from "./_components/FaqSection";
 import FeaturesSection from "./_components/FeaturesSection";
 import HeroSection from "./_components/HeroSection";
 
@@ -27,6 +28,7 @@ export default function Home() {
 
      <BenefitsSection />
      <FeaturesSection />
+     <FaqSection />
     </div>
   );
 }
