@@ -5,11 +5,6 @@ import { useState } from "react";
 
 const faqs = [
   {
-    question: "What is a Kanban board?",
-    answer:
-      "A Kanban board is a visual tool that helps you organize tasks into columns like To Do, In Progress, and Done — making it easier to manage your workflow at a glance.",
-  },
-  {
     question: "Can I collaborate with my team?",
     answer:
       "Yes, you can invite team members to your workspace, assign tasks, leave comments, and track progress in real-time.",
@@ -33,11 +28,6 @@ const faqs = [
     question: "Is there a limit to how many boards I can create?",
     answer:
       "No, you can create as many boards as you like. Each board can hold multiple lists, tasks, and members.",
-  },
-  {
-    question: "Can I integrate with other tools?",
-    answer:
-      "Yes, integrations with tools like Slack, Google Drive, and GitHub are supported for smoother team collaboration.",
   },
 ];
 
